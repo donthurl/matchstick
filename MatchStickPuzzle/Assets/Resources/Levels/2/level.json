@@ -1,0 +1,18 @@
+{
+	"title": "",
+	"description": "SomethingSomethiung",
+	"startingStash": "0",
+	"level": [
+		"3, 2.5",
+		"4.5, 2",
+		"5, 2.5",
+		"6.5,3"
+	],
+	"solution": [
+		"2, 2.5",
+		"2.5, 2",
+		"4, 2.5",
+		"2.5,3"
+	]
+
+}

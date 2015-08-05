@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,6 +17,8 @@ public class GameManager : MonoBehaviour {
     private GameObject mainMenu;
     private static int level = -1;
     private bool checkLevel;
+
+    private IList<Point> solutionPoints = new List<Point>();
 
 	// Use this for initialization
 	void Awake () {
@@ -53,7 +57,7 @@ public class GameManager : MonoBehaviour {
 
     private void LoadLevelInit(int level) {
         GameManager.level = level;
-        gridScript.LoadLevel(level);
+        LevelSetup(level);
     }
 
     public void LoadLevel(int level) {
@@ -106,11 +110,38 @@ public class GameManager : MonoBehaviour {
         CheckSolution();
     }
 
-    // TODO Move this and create a new class called Point that has x/y/ direction
-    private void CheckSolution() {
-        Debug.Log(level);
+    // Add sticks to the grid and store solution for future checks.
+    private void LevelSetup(int level) {        
+        Debug.Log("Loading level: " + level);
+        //this.level = level;
+        
+        TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
+        var json = JSONNode.Parse(levelText.text);
+        // Array of strings of points separated by commas ex ["2, 2.5", "2.5, 2"]
+        var levelList = json["level"];
+        var solutionList = json["solution"];
+        String title = json ["title"];
+        String description = json ["description"];
+        String startingStash = json ["startingStash"];
 
-        TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/solution", typeof(TextAsset));
+        for (int i = 0; i < levelList.Count; i++) {
+            gridScript.AddStick(levelList[i]);
+        }
+
+        //for (int i = 0; i < solutionList.Count; i++) {
+            // Bring below up here
+       // }
+
+        ((Text) GameObject.Find("Level Description").GetComponent<Text>()).text = description;
+    }
+
+    // TODO Move this up and create a new class called Point that has x/y/ direction
+    private void CheckSolution() {
+        TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
+        var json = JSONNode.Parse(levelText.text);
+
+        var solutionList = json["solution"];
+
         // Handle any problems that might arise when reading the text
         try
         {
@@ -124,7 +155,7 @@ public class GameManager : MonoBehaviour {
                     stickPoints.Add(stick.GetComponent<MatchStick>().GetPosition());
                 }
                 // While there's lines left in the text file, do this:
-                do {
+                for (int i = 0; i < solutionList.Count; i++) {
                     line = theReader.ReadLine();
                     if (line != null) {
                         // Do whatever you need to do with the text line, it's a string now
@@ -132,7 +163,7 @@ public class GameManager : MonoBehaviour {
                         // deliniators, then send that array to DoStuff()
                         //Debug.Log(line);
                         
-                        string[] point = line.Split(',');
+                        string[] point = ((String) solutionList[i]).Split(',');
                         
                         float x = -99;
                         float y = -99;
@@ -167,7 +198,7 @@ public class GameManager : MonoBehaviour {
                             //instance.GetComponent<MatchStick>().setPosition(x, y, 0);
                         }
                     }
-                } while (line != null);
+                }
 
                 // Check opposite way.
                 // If any stick isn't part of the solution, then bad.
