@@ -114,9 +114,10 @@ public class GameManager : MonoBehaviour {
     private void LevelSetup(int level) {        
         Debug.Log("Loading level: " + level);
         //this.level = level;
-        
+        StickStash stash = GameObject.FindGameObjectWithTag("Stash").GetComponent<StickStash>();
         TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
         var json = JSONNode.Parse(levelText.text);
+
         // Array of strings of points separated by commas ex ["2, 2.5", "2.5, 2"]
         var levelList = json["level"];
         var solutionList = json["solution"];
@@ -126,6 +127,12 @@ public class GameManager : MonoBehaviour {
 
         for (int i = 0; i < levelList.Count; i++) {
             gridScript.AddStick(levelList[i]);
+        }
+
+        if (startingStash == null) {
+            stash.SetStash(0);
+        } else {
+            stash.SetStash(Int32.Parse(startingStash));
         }
 
         //for (int i = 0; i < solutionList.Count; i++) {

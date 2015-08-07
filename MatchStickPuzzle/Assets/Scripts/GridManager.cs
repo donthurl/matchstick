@@ -29,6 +29,44 @@ public class GridManager : MonoBehaviour {
 
     void GridSetup() {
         gridHolder = new GameObject("Grid").transform;
+
+        Color c1 = Color.white;
+        Color c2 = Color.green;
+        Vector3 startPoint;
+        Vector3 endPpoint;
+        //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+        LineRenderer lineRenderer;
+        
+        GameObject lineObj;
+        
+        for(int x = 0; x < columns + 1; x++) {
+            for(int y = 0; y < rows + 1; y++) {
+                
+                startPoint = new Vector3(x, y, 0f);
+                endPpoint = new Vector3(x + 1, y, 0f);
+                
+                lineObj = new GameObject();
+                
+                lineRenderer = lineObj.AddComponent<LineRenderer>();
+                lineRenderer.SetColors(c1, c2);
+                //lineRenderer.material = whiteDiffuseMat;
+                lineRenderer.SetWidth(0.1F, 0.1F);
+                lineRenderer.SetPosition(0, startPoint);
+                lineRenderer.SetPosition(1, endPpoint);
+                
+                startPoint = new Vector3(x, y, 0f);
+                endPpoint = new Vector3(x, y + 1, 0f);
+                
+                lineObj = new GameObject();
+                
+                lineRenderer = lineObj.AddComponent<LineRenderer>();
+                lineRenderer.SetColors(c1, c2);
+                //lineRenderer.material = whiteDiffuseMat;
+                lineRenderer.SetWidth(0.1F, 0.1F);
+                lineRenderer.SetPosition(0, startPoint);
+                lineRenderer.SetPosition(1, endPpoint);
+            }
+        }
     }
 
     public void SetupScene() {

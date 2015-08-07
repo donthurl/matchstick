@@ -12,7 +12,7 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     // The new instance that will be created on drag.
     GameObject instance;
     private RectTransform canvasRectTransform;
-    private int stashNum = 2;
+    private int stashNum = 0;
     private Text stashText;
 
 	// Use this for initialization
@@ -21,7 +21,6 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (canvas != null) {
             canvasRectTransform = canvas.transform as RectTransform;
         }
-        stashText = GameObject.Find("StashText").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -109,20 +108,22 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         stashNum++;
         Debug.Log("Stash: " + stashNum);
         //GetComponentInChildren<Text>().text = stashNum + " Left";
-        stashText.text = stashNum + " Left";
+        SetStashText(stashNum);
     }
 
     public void RemoveFromStash() {
         stashNum--;
         Debug.Log("Stash: " + stashNum);
         //GetComponentInChildren<Text>().text = stashNum + " Left";
-        stashText.text = stashNum + " Left";
+        SetStashText(stashNum);
     }
 
     public void SetStash(int stashNum) {
         this.stashNum = stashNum;
-        //GetComponentInChildren<Text>().text = stashNum + " Left";
-        stashText.text = stashNum + " Left";
+        if (stashText == null) {
+            stashText = GameObject.Find("StashText").GetComponent<Text>();
+        }
+        SetStashText(stashNum);
     }
 
     Vector2 ClampToWindow(PointerEventData data) {
@@ -136,5 +137,12 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
         Vector2 newPointerPosition = new Vector2(clampedX, clampedY);
         return newPointerPosition;
+    }
+
+    private void SetStashText(int stashNum) {
+        if (stashText == null) {
+            stashText = GameObject.Find("StashText").GetComponent<Text>();
+        }
+        stashText.text = stashNum + " Left";
     }
 }
