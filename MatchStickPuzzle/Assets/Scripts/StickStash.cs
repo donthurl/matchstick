@@ -107,14 +107,12 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void AddToStash() {
         stashNum++;
         Debug.Log("Stash: " + stashNum);
-        //GetComponentInChildren<Text>().text = stashNum + " Left";
         SetStashText(stashNum);
     }
 
     public void RemoveFromStash() {
         stashNum--;
         Debug.Log("Stash: " + stashNum);
-        //GetComponentInChildren<Text>().text = stashNum + " Left";
         SetStashText(stashNum);
     }
 
@@ -143,6 +141,6 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (stashText == null) {
             stashText = GameObject.Find("StashText").GetComponent<Text>();
         }
-        stashText.text = stashNum + " Left";
+        stashText.text = stashNum + "";
     }
 }

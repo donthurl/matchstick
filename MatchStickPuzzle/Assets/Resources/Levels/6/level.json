@@ -1,6 +1,6 @@
 {
 	"title": "",
-	"description": "Move 4 sticks to make only 3 squares",
+	"description": "Move 4 sticks to make 3 connected squares",
 	"startingStash": "0",
 	"level": [
 		"3.5, 2",

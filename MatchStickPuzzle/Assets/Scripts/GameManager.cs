@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
-    void Restart() {
+    public void RestartLevel() {
         Application.LoadLevel(Application.loadedLevel);
     }
 
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoadLevel(int level) {
         GameManager.level = level;
-        Restart();
+        RestartLevel();
     }
 
     // Auto gets called when next level is loaded.
@@ -244,6 +244,6 @@ public class GameManager : MonoBehaviour {
         Debug.Log(level);
         level++;
         Debug.Log(level);
-        Restart();
+        RestartLevel();
     }
 }
