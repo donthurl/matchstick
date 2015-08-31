@@ -14,9 +14,11 @@ public class GameManager : MonoBehaviour {
 	public GridManager gridScript;
 
     private GameObject congratsPanel;
-    private GameObject mainMenu;
+    // For some reason this variable isn't staying set so made this static.
+    private static GameObject mainMenu;
     private static int level = -1;
     private bool checkLevel;
+    private GameObject canvas;
 
     private IList<Point> solutionPoints = new List<Point>();
 
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour {
     }
 
 	void InitGame() {
-        Debug.Log("NextLevel: " + level);
+        canvas = GameObject.Find("Canvas");
         congratsPanel = GameObject.Find("Congrats Panel");
         congratsPanel.SetActive(false);
         mainMenu = GameObject.Find("MainMenu");
@@ -50,6 +52,13 @@ public class GameManager : MonoBehaviour {
             mainMenu.SetActive(false);
         }
 	}
+
+    public void DisplayMainMenu(Boolean display) {
+        if (mainMenu == null) {
+            mainMenu = GameObject.Find("MainMenu");
+        }
+        mainMenu.SetActive(display);
+    }
 
     public void RestartLevel() {
         Application.LoadLevel(Application.loadedLevel);
