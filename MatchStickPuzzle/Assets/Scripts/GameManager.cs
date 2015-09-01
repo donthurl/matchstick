@@ -156,7 +156,8 @@ public class GameManager : MonoBehaviour {
         TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
         var json = JSONNode.Parse(levelText.text);
 
-        var solutionList = json["solution"];
+        // Array of Array possible solutions
+        var solutionLists = json["solution"];
 
         // Handle any problems that might arise when reading the text
         try
@@ -164,80 +165,83 @@ public class GameManager : MonoBehaviour {
             GameObject[] sticks = GameObject.FindGameObjectsWithTag("Stick");
             IList<Point> stickPoints = new List<Point>();
             IList<Point> solutionPoints = new List<Point>();
-            string line;
-            StringReader theReader = new StringReader(levelText.text);
-            using(theReader) {
-                foreach (GameObject stick in sticks) {
-                    stickPoints.Add(stick.GetComponent<MatchStick>().GetPosition());
+
+            foreach (GameObject stick in sticks) {
+                stickPoints.Add(stick.GetComponent<MatchStick>().GetPosition());
+            }
+            bool foundPossibleSolution = false;
+            // While there's lines left in the text file, do this:
+            for (int j = 0; j < solutionLists.Count; j++) {
+                if (foundPossibleSolution) {
+                    break;
                 }
-                // While there's lines left in the text file, do this:
+                var solutionList = solutionLists[j];
+                solutionPoints.Clear();
+
                 for (int i = 0; i < solutionList.Count; i++) {
-                    line = theReader.ReadLine();
-                    if (line != null) {
-                        // Do whatever you need to do with the text line, it's a string now
-                        // In this example, I split it into arguments based on comma
-                        // deliniators, then send that array to DoStuff()
-                        //Debug.Log(line);
-                        
-                        string[] point = ((String) solutionList[i]).Split(',');
-                        
-                        float x = -99;
-                        float y = -99;
-                        try {
-                            x = float.Parse(point[0]);
-                        } catch (Exception e) {
-                            Debug.LogError("Message: " + e.Message + "\nx value for line: " + line);
-                        }
-                        try { 
-                            y = float.Parse(point[1]);
-                        } catch (Exception e) {
-                            Debug.LogError("Message: " + e.Message + "\ny value for line: " + line);
-                        }
-                        if (x != -99 && y != -99) {
-                            Point solutionPoint = new Point(x, y);
-
-                            solutionPoints.Add(solutionPoint);
-                            
-                            // Check to see if a stick covers this point.
-                            bool found = false;
-                            foreach (Point stickPoint in stickPoints) {
-                                if (stickPoint.IsEqual(solutionPoint)) {
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            
-                            if (!found) {
-                                Debug.Log("Wrong");
-                                return;
-                            }
-                            //instance.GetComponent<MatchStick>().setPosition(x, y, 0);
-                        }
+                    
+                    string[] point = ((String) solutionList[i]).Split(',');
+                    
+                    float x = -99;
+                    float y = -99;
+                    try {
+                        x = float.Parse(point[0]);
+                    } catch (Exception e) {
+                        Debug.LogError("Message: " + e.Message + "\nx value for line: " + point);
                     }
-                }
+                    try { 
+                        y = float.Parse(point[1]);
+                    } catch (Exception e) {
+                        Debug.LogError("Message: " + e.Message + "\ny value for line: " + point);
+                    }
+                    if (x != -99 && y != -99) {
+                        Point solutionPoint = new Point(x, y);
 
-                // Check opposite way.
-                // If any stick isn't part of the solution, then bad.
-                foreach (Point point in stickPoints) {
-                    bool found = false;
-                    foreach (Point sPoint in solutionPoints) {
-                        if (point.IsEqual(sPoint)) {
-                            found = true;
+                        solutionPoints.Add(solutionPoint);
+                        
+                        // Check to see if a stick covers this point.
+                        bool found = false;
+                        foreach (Point stickPoint in stickPoints) {
+                            if (stickPoint.IsEqual(solutionPoint)) {
+                                found = true;
+                                foundPossibleSolution = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!found) {
+                            foundPossibleSolution = false;
+                            Debug.Log("Wrong");
+                            // Don't need to search this solution list anymore, check next list
                             break;
                         }
-                    }
-                    if (!found) {
-                        Debug.Log("Wrong");
-                        return;
+                        //instance.GetComponent<MatchStick>().setPosition(x, y, 0);
                     }
                 }
-                
-                // Done reading, close the reader and return true to broadcast success
-                theReader.Close();
-                
-                Debug.Log("Correct");
-                congratsPanel.SetActive(true);
             }
+            // If it didn't match any of the lists, don't need to do any more checks.
+            if (!foundPossibleSolution) {
+                return;
+            }
+            // Check opposite way.
+            // If any stick isn't part of the solution, then bad.
+            foreach (Point point in stickPoints) {
+                bool found = false;
+                foreach (Point sPoint in solutionPoints) {
+                    if (point.IsEqual(sPoint)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    Debug.Log("Wrong");
+                    return;
+                }
+            }
+            
+            Debug.Log("Correct");
+            congratsPanel.SetActive(true);
+            
         }
         // If anything broke in the try block, we throw an exception with information
         // on what didn't work
