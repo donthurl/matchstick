@@ -1,6 +1,6 @@
 {
 	"title": "",
-	"description": "Remove 2 sticks to leave only 2 squares",
+	"description": "Remove 2 sticks to leave 2 squares",
 	"startingStash": "0",
 	"level": [
 		"3.5, 3",
@@ -15,13 +15,13 @@
 		"4.5, 1"
 	],
 	"solution": [
-		"3.5, 3",
+		["3.5, 3",
 		"3, 2.5",
 		"4, 2.5",
 		"3.5, 2",
 		"4.5, 2",
 		"4, 1.5",
 		"5, 1.5",
-		"4.5, 1"
+		"4.5, 1"]
 	]
 }
