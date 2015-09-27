@@ -171,6 +171,7 @@ public class GameManager : MonoBehaviour {
             IList<Point> solutionPoints = new List<Point>();
 
             foreach (GameObject stick in sticks) {
+                MatchStick test = stick.GetComponent<MatchStick>();
                 stickPoints.Add(stick.GetComponent<MatchStick>().GetPosition());
             }
             bool foundPossibleSolution = false;

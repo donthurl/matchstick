@@ -44,7 +44,7 @@ public class DragAndDrop : MonoBehaviour {
 
         MatchStick matchStickScript = GetComponent<MatchStick>();
         if (matchStickScript != null) {
-            matchStickScript.setPosition(x, y, z);
+            matchStickScript.dropAt(x, y, z);
         }
         GameManager.instance.CheckLevel();
         /*

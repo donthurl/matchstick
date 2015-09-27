@@ -3,9 +3,11 @@ using System.Collections;
 
 public class MatchStick : MonoBehaviour {
 
-	//public GameObject Stick;
+    //public GameObject Stick;
+    public AudioClip placementSound;
 
     Point point = new Point();
+    private AudioSource source;
 
 	// Use this for initialization
 	void Start () {
@@ -17,10 +19,19 @@ public class MatchStick : MonoBehaviour {
 	
 	}
 
+    void Awake () {
+        source = GetComponent<AudioSource>();
+    }
+
     public Point GetPosition() {
         return this.point;
     }
 
+    /* Calls setPosition and plays audio sound */
+    public void dropAt(float x, float y, float z) {
+        setPosition(x, y, z);
+        source.PlayOneShot(placementSound, 1);
+    }
     public void setPosition(float x, float y, float z) {
         transform.position = new Vector3(x, y, z);
         point.SetPoint(x, y);
