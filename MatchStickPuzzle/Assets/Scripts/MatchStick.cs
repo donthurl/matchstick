@@ -25,7 +25,9 @@ public class MatchStick : MonoBehaviour {
         transform.position = new Vector3(x, y, z);
         point.SetPoint(x, y);
         setRotation();
-        Debug.Log("Position: " + point.GetX() + ", " + point.GetY());
+		if (Debug.isDebugBuild) {
+			//Debug.Log ("Position: " + point.GetX () + ", " + point.GetY ());
+		}
     }
 
     // If the match stick is on a grid line, one of the axis will be at the mid point. If it is in the middle of the x

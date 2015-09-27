@@ -30,43 +30,45 @@ public class GridManager : MonoBehaviour {
     void GridSetup() {
         gridHolder = new GameObject("Grid").transform;
 
-        Color c1 = Color.white;
-        Color c2 = Color.green;
-        Vector3 startPoint;
-        Vector3 endPpoint;
-        //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
-        LineRenderer lineRenderer;
+		if (Debug.isDebugBuild &&  false) {
+			Color c1 = Color.white;
+			Color c2 = Color.green;
+			Vector3 startPoint;
+			Vector3 endPpoint;
+			//Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+			LineRenderer lineRenderer;
         
-        GameObject lineObj;
+			GameObject lineObj;
         
-        for(int x = 0; x < columns + 1; x++) {
-            for(int y = 0; y < rows + 1; y++) {
+			for (int x = 0; x < columns + 1; x++) {
+				for (int y = 0; y < rows + 1; y++) {
                 
-                startPoint = new Vector3(x, y, 0f);
-                endPpoint = new Vector3(x + 1, y, 0f);
+					startPoint = new Vector3 (x, y, 0f);
+					endPpoint = new Vector3 (x + 1, y, 0f);
                 
-                lineObj = new GameObject();
+					lineObj = new GameObject ();
                 
-                lineRenderer = lineObj.AddComponent<LineRenderer>();
-                lineRenderer.SetColors(c1, c2);
-                //lineRenderer.material = whiteDiffuseMat;
-                lineRenderer.SetWidth(0.1F, 0.1F);
-                lineRenderer.SetPosition(0, startPoint);
-                lineRenderer.SetPosition(1, endPpoint);
+					lineRenderer = lineObj.AddComponent<LineRenderer> ();
+					lineRenderer.SetColors (c1, c2);
+					//lineRenderer.material = whiteDiffuseMat;
+					lineRenderer.SetWidth (0.1F, 0.1F);
+					lineRenderer.SetPosition (0, startPoint);
+					lineRenderer.SetPosition (1, endPpoint);
                 
-                startPoint = new Vector3(x, y, 0f);
-                endPpoint = new Vector3(x, y + 1, 0f);
+					startPoint = new Vector3 (x, y, 0f);
+					endPpoint = new Vector3 (x, y + 1, 0f);
                 
-                lineObj = new GameObject();
+					lineObj = new GameObject ();
                 
-                lineRenderer = lineObj.AddComponent<LineRenderer>();
-                lineRenderer.SetColors(c1, c2);
-                //lineRenderer.material = whiteDiffuseMat;
-                lineRenderer.SetWidth(0.1F, 0.1F);
-                lineRenderer.SetPosition(0, startPoint);
-                lineRenderer.SetPosition(1, endPpoint);
-            }
-        }
+					lineRenderer = lineObj.AddComponent<LineRenderer> ();
+					lineRenderer.SetColors (c1, c2);
+					//lineRenderer.material = whiteDiffuseMat;
+					lineRenderer.SetWidth (0.1F, 0.1F);
+					lineRenderer.SetPosition (0, startPoint);
+					lineRenderer.SetPosition (1, endPpoint);
+				}
+			}
+		}
     }
 
     public void SetupScene() {
@@ -82,12 +84,16 @@ public class GridManager : MonoBehaviour {
         try {
             x = float.Parse(point[0]);
         } catch (Exception e) {
-            Debug.LogError("Message: " + e.Message + "\nx value for point: " + pointString);
+			if (Debug.isDebugBuild)  {
+                Debug.LogError("Message: " + e.Message + "\nx value for point: " + pointString);
+			}
         }
         try { 
             y = float.Parse(point[1]);
         } catch (Exception e) {
-            Debug.LogError("Message: " + e.Message + "\ny value for point: " + pointString);
+			if (Debug.isDebugBuild)  {
+                Debug.LogError("Message: " + e.Message + "\ny value for point: " + pointString);
+			}
         }
         if (x != -99 && y != -99) {
             GameObject instance = Instantiate (stick, new Vector3(0, 0, 0f), Quaternion.identity) as GameObject;

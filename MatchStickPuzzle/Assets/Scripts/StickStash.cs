@@ -33,7 +33,9 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (stashNum <= 0) {
             return;
         }
-        Debug.Log("Start Drag");
+		if (Debug.isDebugBuild) { 
+			Debug.Log ("Start Drag");
+		}
         Vector3 currentPosition = transform.position;
         instance = Instantiate (stick, currentPosition, Quaternion.identity) as GameObject;
         //instance.GetComponent<MatchStick>().setPosition(x, y, 0);
@@ -106,13 +108,17 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void AddToStash() {
         stashNum++;
-        Debug.Log("Stash: " + stashNum);
+		if (Debug.isDebugBuild) {
+			Debug.Log ("Stash: " + stashNum);
+		}
         SetStashText(stashNum);
     }
 
     public void RemoveFromStash() {
         stashNum--;
-        Debug.Log("Stash: " + stashNum);
+		if (Debug.isDebugBuild) {
+			Debug.Log ("Stash: " + stashNum);
+		}
         SetStashText(stashNum);
     }
 

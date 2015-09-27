@@ -88,7 +88,9 @@ public class GameManager : MonoBehaviour {
         // Read line by line
         StringReader reader = new StringReader(levelList.text);
         if (reader == null) {
-            Debug.Log("LevelList not found or readable");
+			if (Debug.isDebugBuild)  {
+                Debug.Log("LevelList not found or readable");
+			}
         } else {
             string line;
             while ((line = reader.ReadLine()) != null) {
@@ -121,7 +123,9 @@ public class GameManager : MonoBehaviour {
 
     // Add sticks to the grid and store solution for future checks.
     private void LevelSetup(int level) {        
-        Debug.Log("Loading level: " + level);
+        if (Debug.isDebugBuild) {
+		    Debug.Log ("Loading level: " + level);
+		}
         //this.level = level;
         StickStash stash = GameObject.FindGameObjectWithTag("Stash").GetComponent<StickStash>();
         TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
@@ -187,12 +191,16 @@ public class GameManager : MonoBehaviour {
                     try {
                         x = float.Parse(point[0]);
                     } catch (Exception e) {
-                        Debug.LogError("Message: " + e.Message + "\nx value for line: " + point);
-                    }
+						if (Debug.isDebugBuild)  {
+                            Debug.LogError("Message: " + e.Message + "\nx value for line: " + point);
+						}
+					}
                     try { 
                         y = float.Parse(point[1]);
                     } catch (Exception e) {
-                        Debug.LogError("Message: " + e.Message + "\ny value for line: " + point);
+						if (Debug.isDebugBuild)  {
+                           Debug.LogError("Message: " + e.Message + "\ny value for line: " + point);
+						}
                     }
                     if (x != -99 && y != -99) {
                         Point solutionPoint = new Point(x, y);
@@ -211,7 +219,9 @@ public class GameManager : MonoBehaviour {
                         
                         if (!found) {
                             foundPossibleSolution = false;
-                            Debug.Log("Wrong");
+							if (Debug.isDebugBuild)  {
+                                Debug.Log("Wrong");
+							}
                             // Don't need to search this solution list anymore, check next list
                             break;
                         }
@@ -234,12 +244,15 @@ public class GameManager : MonoBehaviour {
                     }
                 }
                 if (!found) {
-                    Debug.Log("Wrong");
+					if (Debug.isDebugBuild)  {
+                        Debug.Log("Wrong");
+					}
                     return;
                 }
             }
-            
-            Debug.Log("Correct");
+            if (Debug.isDebugBuild) {
+                Debug.Log("Correct");
+		    }
             congratsPanel.SetActive(true);
             
         }
@@ -247,16 +260,19 @@ public class GameManager : MonoBehaviour {
         // on what didn't work
         catch (Exception e)
         {
-            Debug.LogError(e.Message);
+            if (Debug.isDebugBuild) {
+			    Debug.LogError(e.Message);
+		    }
             Console.WriteLine("{0}\n", e.Message);
             //return false;
         }
     }
 	
     public void NextLevel() {
-        Debug.Log(level);
         level++;
-        Debug.Log(level);
+		if (Debug.isDebugBuild) {
+			Debug.Log (level);
+		}
         RestartLevel();
     }
 }
