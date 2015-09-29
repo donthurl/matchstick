@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour {
     // For some reason this variable isn't staying set so made this static.
     private static GameObject mainMenu;
     private static int level = -1;
+	private static IList<int> completedLevels = new List<int>();
     private bool checkLevel;
     private GameObject canvas;
 
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		gridScript = GetComponent<GridManager> ();
+		Load();
 		instance.InitGame ();
 	}
 
@@ -117,6 +120,10 @@ public class GameManager : MonoBehaviour {
         return levels;
     }
 
+	public IList<int> GetCompletedLevels() {
+		return completedLevels;
+	}
+
     public void CheckLevel() {
         CheckSolution();
     }
@@ -171,7 +178,6 @@ public class GameManager : MonoBehaviour {
             IList<Point> solutionPoints = new List<Point>();
 
             foreach (GameObject stick in sticks) {
-                MatchStick test = stick.GetComponent<MatchStick>();
                 stickPoints.Add(stick.GetComponent<MatchStick>().GetPosition());
             }
             bool foundPossibleSolution = false;
@@ -254,6 +260,11 @@ public class GameManager : MonoBehaviour {
             if (Debug.isDebugBuild) {
                 Debug.Log("Correct");
 		    }
+			if (!completedLevels.Contains(level)) {
+				completedLevels.Add(level);
+				Save();
+			}
+
             congratsPanel.SetActive(true);
             
         }
@@ -276,4 +287,35 @@ public class GameManager : MonoBehaviour {
 		}
         RestartLevel();
     }
+
+	public void Save() {
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create (Application.persistentDataPath + "/playerData.dat");
+
+		PlayerData data = new PlayerData ();
+		data.beatenLevels = completedLevels;
+
+		bf.Serialize (file, data);
+		file.Close ();
+	}
+
+	public void Load() {
+		if (File.Exists(Application.persistentDataPath + "/playerData.dat")) {
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open(Application.persistentDataPath + "/playerData.dat", FileMode.Open);
+			PlayerData data = (PlayerData) bf.Deserialize(file);
+			file.Close();
+
+			completedLevels = data.beatenLevels;
+
+			if (Debug.isDebugBuild) {
+				Debug.Log ("Loading player data: " + Application.persistentDataPath + "/playerData.dat");
+			}
+		}
+	}
+
+	[Serializable]
+	class PlayerData {
+		public IList<int>  beatenLevels;
+	}
 }

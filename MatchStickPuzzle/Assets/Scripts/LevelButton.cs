@@ -4,6 +4,7 @@ using System.Collections;
 
 public class LevelButton : MonoBehaviour {
 
+	public Sprite winSprite;
     private int level;
 
 	// Use this for initialization
@@ -27,4 +28,9 @@ public class LevelButton : MonoBehaviour {
     public void LoadLevel() {
         GameManager.instance.LoadLevel(level);
     }
+
+	public void SetSolved() {
+		Button button = gameObject.GetComponent<Button>();
+		button.image.sprite = winSprite;
+	}
 }

@@ -10,10 +10,10 @@ public class MainPanel : MonoBehaviour {
     private IList<string> levels;
 
 	void Start () {
-        CreateLevelButtons(GameManager.instance.GetLevelNames());
+        CreateLevelButtons(GameManager.instance.GetLevelNames(), GameManager.instance.GetCompletedLevels());
 	}
 
-    public void CreateLevelButtons(IList<string> levels) {
+    public void CreateLevelButtons(IList<string> levels, IList<int> solvedLevels) {
         this.levels = levels;
         foreach (string level in levels) {
             GameObject button = Instantiate(levelButton) as GameObject;
@@ -23,6 +23,9 @@ public class MainPanel : MonoBehaviour {
             {
                 int m = Int32.Parse(level);
                 button.GetComponent<LevelButton>().SetLevel(m);
+				if (solvedLevels.Contains(m)) {
+					button.GetComponent<LevelButton>().SetSolved();
+				}
             }
             catch (FormatException e)
             {
