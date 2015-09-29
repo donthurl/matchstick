@@ -33,8 +33,16 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		gridScript = GetComponent<GridManager> ();
-		Load();
-		instance.InitGame ();
+#if UNITY_WEBPLAYER
+        Debug.Log("Web Player");
+#endif
+#if UNITY_IOS
+        Debug.Log("IOS");
+#endif
+#if !UNITY_WEBPLAYER
+        Load();
+#endif
+        instance.InitGame ();
 	}
 
     // Update is called once per frame
@@ -262,7 +270,10 @@ public class GameManager : MonoBehaviour {
 		    }
 			if (!completedLevels.Contains(level)) {
 				completedLevels.Add(level);
-				Save();
+#if !UNITY_WEBPLAYER
+                    Save();
+#endif
+				
 			}
 
             congratsPanel.SetActive(true);

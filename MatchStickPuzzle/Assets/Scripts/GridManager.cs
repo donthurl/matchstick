@@ -30,7 +30,7 @@ public class GridManager : MonoBehaviour {
     void GridSetup() {
         gridHolder = new GameObject("Grid").transform;
 
-		if (Debug.isDebugBuild &&  false) {
+		if (Debug.isDebugBuild && false) {
 			Color c1 = Color.white;
 			Color c2 = Color.green;
 			Vector3 startPoint;
