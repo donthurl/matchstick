@@ -31,6 +31,9 @@ public class MatchStick : MonoBehaviour {
     public void dropAt(float x, float y, float z) {
         setPosition(x, y, z);
         source.PlayOneShot(placementSound, 1);
+		if (Debug.isDebugBuild)  {
+			Debug.Log ("(" +  x +  ", " + y +  ", " + z + ")");
+		}
     }
     public void setPosition(float x, float y, float z) {
         transform.position = new Vector3(x, y, 0);

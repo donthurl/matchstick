@@ -19,21 +19,6 @@ public class DragAndDrop : MonoBehaviour {
 		offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
 
 	}
-	/*
-	void OnMouseDown()  {
-
-	}
-
-    void OnMouseDrag() {
-        float currentZ = transform.position.z;
-
-        point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        point.z = currentZ;
-
-        transform.position = point +  offset;
-    }
-    */
-
 	
 	void OnMouseDown(){
 		screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -64,7 +49,7 @@ public class DragAndDrop : MonoBehaviour {
 		}
 	}
 	
-	void OnMouseUpAsButton() {
+	void OnMouseUp() {
 		if (!doubleClick) {
 			Vector3 currentPosition = transform.position;
 
