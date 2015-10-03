@@ -81,6 +81,7 @@ public class GridManager : MonoBehaviour {
         
         float x = -99;
         float y = -99;
+		float r = -99;
         try {
             x = float.Parse(point[0]);
         } catch (Exception e) {
@@ -95,9 +96,16 @@ public class GridManager : MonoBehaviour {
                 Debug.LogError("Message: " + e.Message + "\ny value for point: " + pointString);
 			}
         }
-        if (x != -99 && y != -99) {
+		try {
+			r = float.Parse(point[2]);
+		} catch (Exception e)  {
+			if (Debug.isDebugBuild) { 
+				Debug.LogError ("Message: " + e.Message + "\nr value for point: " + pointString);
+			}
+		}
+        if (x != -99 && y != -99 &&  r != -99) {
             GameObject instance = Instantiate (stick, new Vector3(0, 0, 0f), Quaternion.identity) as GameObject;
-            instance.GetComponent<MatchStick>().setPosition(x, y, 0);
+            instance.GetComponent<MatchStick>().setPosition(x, y, r);
             instance.transform.SetParent(gridHolder);
         }
 

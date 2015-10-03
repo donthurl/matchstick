@@ -203,6 +203,7 @@ public class GameManager : MonoBehaviour {
                     
                     float x = -99;
                     float y = -99;
+                    float r = -99;
                     try {
                         x = float.Parse(point[0]);
                     } catch (Exception e) {
@@ -217,8 +218,15 @@ public class GameManager : MonoBehaviour {
                            Debug.LogError("Message: " + e.Message + "\ny value for line: " + point);
 						}
                     }
-                    if (x != -99 && y != -99) {
-                        Point solutionPoint = new Point(x, y);
+                    try {
+                        r = float.Parse(point[2]);
+                    } catch (Exception e)  {
+                        if (Debug.isDebugBuild) { 
+                            Debug.LogError ("Message: " + e.Message + "\nr value for point: " + point);
+                        }
+                    }
+                    if (x != -99 && y != -99 &&  r != -99) {
+                        Point solutionPoint = new Point(x, y, r);
 
                         solutionPoints.Add(solutionPoint);
                         
