@@ -76,7 +76,7 @@ public class StickStash : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         float y = Mathf.Round(currentPosition.y * 2) / 2;
         float z = Mathf.Round(currentPosition.z);
         
-        instance.GetComponent<MatchStick>().setPosition(x, y, z);
+        instance.GetComponent<MatchStick>().dropAt(x, y, z);
         //MatchStick matchStickScript = GetComponent<MatchStick>();
         //if (matchStickScript != null) {
         //    matchStickScript.setPosition(x, y, z);

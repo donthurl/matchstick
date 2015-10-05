@@ -52,6 +52,7 @@ public class DragAndDrop : MonoBehaviour {
 	void OnMouseUp() {
 		if (!doubleClick) {
 			Vector3 currentPosition = transform.position;
+			MatchStick matchStickScript = GetComponent<MatchStick> ();
 
 			GameObject stash = GameObject.FindGameObjectWithTag ("Stash");
 			// Check to see if we dropped on the stash. If so, then...
@@ -61,6 +62,7 @@ public class DragAndDrop : MonoBehaviour {
 				// the stick won't actually get destroyed/removed until next frame.
 				Destroy (gameObject);
 				stash.GetComponent<StickStash> ().AddToStash ();
+				matchStickScript.Stashed();
 				return;
 			}
 
@@ -69,8 +71,6 @@ public class DragAndDrop : MonoBehaviour {
 			float y = Mathf.Round (currentPosition.y * 2) / 2;
 			float z = Mathf.Round (transform.eulerAngles.z);
 
-
-			MatchStick matchStickScript = GetComponent<MatchStick> ();
 			if (matchStickScript != null) {
 				matchStickScript.dropAt (x, y, z);
 			}

@@ -14,9 +14,11 @@ public class GameManager : MonoBehaviour {
 
 	public GridManager gridScript;
 
-    private GameObject congratsPanel;
+    private static GameObject congratsPanel;
     // For some reason this variable isn't staying set so made this static.
     private static GameObject mainMenu;
+	private static GameObject topMenu;
+	private GameObject grid;
     private static int level = -1;
 	private static IList<int> completedLevels = new List<int>();
     private bool checkLevel;
@@ -33,10 +35,13 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		gridScript = GetComponent<GridManager> ();
+
 #if UNITY_WEBPLAYER
         Debug.Log("Web Player");
 #endif
 #if UNITY_IOS
+		// Forces a different code path in the BinaryFormatter that doesn't rely on run-time code generation (which would break on iOS).
+		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER","yes");
         Debug.Log("IOS");
 #endif
 #if !UNITY_WEBPLAYER
@@ -55,6 +60,8 @@ public class GameManager : MonoBehaviour {
         congratsPanel = GameObject.Find("Congrats Panel");
         congratsPanel.SetActive(false);
         mainMenu = GameObject.Find("MainMenu");
+		topMenu = GameObject.Find ("Top Menu");
+		topMenu.SetActive(false);
 		gridScript.SetupScene ();
         if (level == -1) {
 
@@ -65,9 +72,12 @@ public class GameManager : MonoBehaviour {
 	}
 
     public void DisplayMainMenu(Boolean display) {
-        if (mainMenu == null) {
-            mainMenu = GameObject.Find("MainMenu");
-        }
+		if (grid == null) {
+			grid = GameObject.Find("Grid");
+		}
+		grid.SetActive(false);
+		congratsPanel.SetActive(false);
+		topMenu.SetActive(false);
         mainMenu.SetActive(display);
     }
 
@@ -141,7 +151,11 @@ public class GameManager : MonoBehaviour {
         if (Debug.isDebugBuild) {
 		    Debug.Log ("Loading level: " + level);
 		}
-        //this.level = level;
+		topMenu.SetActive(true);
+		if (grid == null) {
+			grid = GameObject.Find("Grid");
+		}
+		grid.SetActive(true);
         StickStash stash = GameObject.FindGameObjectWithTag("Stash").GetComponent<StickStash>();
         TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
         var json = JSONNode.Parse(levelText.text);

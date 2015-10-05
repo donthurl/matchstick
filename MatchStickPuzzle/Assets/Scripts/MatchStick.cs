@@ -35,6 +35,12 @@ public class MatchStick : MonoBehaviour {
 			Debug.Log ("(" +  x +  ", " + y +  ", " + z + ")");
 		}
     }
+
+	// Stick was stashed, play audio sound
+	public void Stashed() {
+		source.PlayOneShot(placementSound, 1);
+	}
+
     public void setPosition(float x, float y, float z) {
         transform.position = new Vector3(x, y, 0);
 		Rotate(z);
