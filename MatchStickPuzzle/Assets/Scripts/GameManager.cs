@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 
 	public GridManager gridScript;
+	public AudioClip placementSound;
 
+	private AudioSource source;
     private static GameObject congratsPanel;
     // For some reason this variable isn't staying set so made this static.
     private static GameObject mainMenu;
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad (gameObject);
 		gridScript = GetComponent<GridManager> ();
+		source = GetComponent<AudioSource>();
 
 #if UNITY_WEBPLAYER
         Debug.Log("Web Player");
@@ -147,7 +150,7 @@ public class GameManager : MonoBehaviour {
     }
 
     // Add sticks to the grid and store solution for future checks.
-    private void LevelSetup(int level) {        
+    private void LevelSetup(int level) {
         if (Debug.isDebugBuild) {
 		    Debug.Log ("Loading level: " + level);
 		}
@@ -155,6 +158,7 @@ public class GameManager : MonoBehaviour {
 		if (grid == null) {
 			grid = GameObject.Find("Grid");
 		}
+		source.PlayOneShot(placementSound, 1);
 		grid.SetActive(true);
         StickStash stash = GameObject.FindGameObjectWithTag("Stash").GetComponent<StickStash>();
         TextAsset levelText = (TextAsset)Resources.Load("Levels/" + level + "/level", typeof(TextAsset));
