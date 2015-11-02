@@ -542,6 +542,7 @@ GameObject:
   - 222: {fileID: 817603728}
   - 114: {fileID: 817603727}
   - 114: {fileID: 817603726}
+  - 114: {fileID: 817603729}
   m_Layer: 5
   m_Name: Cancel  Button
   m_TagString: Untagged
@@ -564,8 +565,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -30.9999847}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 55, y: -30.9999847}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &817603726
 MonoBehaviour:
@@ -606,8 +607,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11415824, guid: 4f030fe239bfc9047ae8301464480b10, type: 2}
-        m_MethodName: NextLevel
+      - m_Target: {fileID: 817603729}
+        m_MethodName: Cancel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -652,6 +653,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 817603724}
+--- !u!114 &817603729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 817603724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33e08850f27cfb4196f4b9f2ed9ba92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &891924924
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,6 +984,7 @@ GameObject:
   - 222: {fileID: 1069609713}
   - 114: {fileID: 1069609712}
   - 114: {fileID: 1069609711}
+  - 114: {fileID: 1069609714}
   m_Layer: 5
   m_Name: Ok Button
   m_TagString: Untagged
@@ -994,8 +1007,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: -31}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -54, y: -31}
+  m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1069609711
 MonoBehaviour:
@@ -1036,8 +1049,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11415824, guid: 4f030fe239bfc9047ae8301464480b10, type: 2}
-        m_MethodName: NextLevel
+      - m_Target: {fileID: 1069609714}
+        m_MethodName: ResetProgressionData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1082,6 +1095,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1069609709}
+--- !u!114 &1069609714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1069609709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33e08850f27cfb4196f4b9f2ed9ba92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1303803697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1177,7 @@ GameObject:
   - 222: {fileID: 1312892855}
   - 114: {fileID: 1312892854}
   - 114: {fileID: 1312892853}
+  - 114: {fileID: 1312892856}
   m_Layer: 5
   m_Name: ResetProgressionButton
   m_TagString: Untagged
@@ -1175,7 +1200,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -432}
+  m_AnchoredPosition: {x: 400, y: -450.200012}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1312892853
@@ -1216,7 +1241,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1312892854}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1312892856}
+        m_MethodName: ShowResetConfirmMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1312892854
@@ -1252,6 +1288,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1312892851}
+--- !u!114 &1312892856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1312892851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84b13e55ebb02742922c68663852c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320033170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,7 +1585,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Discard Pile
+  m_Text: Discard
 --- !u!222 &1791940535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1711,7 +1758,6 @@ GameObject:
   - 224: {fileID: 1984022574}
   - 222: {fileID: 1984022577}
   - 114: {fileID: 1984022576}
-  - 82: {fileID: 1984022575}
   m_Layer: 5
   m_Name: ConfirmReset Panel
   m_TagString: Untagged
@@ -1739,76 +1785,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -1.52587891e-05}
   m_SizeDelta: {x: 294, y: 140}
   m_Pivot: {x: .5, y: .5}
---- !u!82 &1984022575
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1984022573}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e63b069e9ae1c4b458dc2c626944c1a5, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: .107000001
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
 --- !u!114 &1984022576
 MonoBehaviour:
   m_ObjectHideFlags: 0

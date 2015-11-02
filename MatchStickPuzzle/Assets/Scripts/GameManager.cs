@@ -16,9 +16,11 @@ public class GameManager : MonoBehaviour {
 	public AudioClip placementSound;
 
 	private AudioSource source;
+	private static GameObject resetMenu;
     private static GameObject congratsPanel;
     // For some reason this variable isn't staying set so made this static.
     private static GameObject mainMenu;
+	private static GameObject resetProgressButton;
 	private static GameObject topMenu;
 	private GameObject grid;
     private static int level = -1;
@@ -63,6 +65,10 @@ public class GameManager : MonoBehaviour {
         congratsPanel = GameObject.Find("Congrats Panel");
         congratsPanel.SetActive(false);
         mainMenu = GameObject.Find("MainMenu");
+		resetMenu = GameObject.Find("ConfirmReset Panel");
+		resetProgressButton = GameObject.Find("ResetProgressionButton");
+		resetProgressButton.GetComponent<ResetButton>().SetResetMenu(resetMenu);
+		resetMenu.SetActive(false);
 		topMenu = GameObject.Find ("Top Menu");
 		topMenu.SetActive(false);
 		gridScript.SetupScene ();
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour {
         } else {
             LoadLevelInit(level);
             mainMenu.SetActive(false);
+			resetProgressButton.SetActive(false);
         }
 	}
 
@@ -82,6 +89,7 @@ public class GameManager : MonoBehaviour {
 		congratsPanel.SetActive(false);
 		topMenu.SetActive(false);
         mainMenu.SetActive(display);
+		resetProgressButton.SetActive(display);
     }
 
     public void RestartLevel() {
@@ -349,6 +357,13 @@ public class GameManager : MonoBehaviour {
 				Debug.Log ("Loading player data: " + Application.persistentDataPath + "/playerData.dat");
 			}
 		}
+	}
+
+	public void Delete() {
+		if (File.Exists(Application.persistentDataPath + "/playerData.dat")) {
+			File.Delete(Application.persistentDataPath + "/playerData.dat");
+		}
+		completedLevels.Clear();
 	}
 
 	[Serializable]
