@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     // For some reason this variable isn't staying set so made this static.
     private static GameObject mainMenu;
 	private static GameObject resetProgressButton;
+	private static GameObject tip;
 	private static GameObject topMenu;
 	private GameObject grid;
     private static int level = -1;
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour {
 		resetProgressButton = GameObject.Find("ResetProgressionButton");
 		resetProgressButton.GetComponent<ResetButton>().SetResetMenu(resetMenu);
 		resetMenu.SetActive(false);
+		tip = GameObject.Find("Tip");
 		topMenu = GameObject.Find ("Top Menu");
 		topMenu.SetActive(false);
 		gridScript.SetupScene ();
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour {
             LoadLevelInit(level);
             mainMenu.SetActive(false);
 			resetProgressButton.SetActive(false);
+			tip.SetActive(false);
         }
 	}
 
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour {
 		topMenu.SetActive(false);
         mainMenu.SetActive(display);
 		resetProgressButton.SetActive(display);
+		tip.SetActive(display);
     }
 
     public void RestartLevel() {
