@@ -86,7 +86,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.MySomething.StickPuzzles
-  bundleVersion: 1.0
+  bundleVersion: 1.2
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   metroEnableLowLatencyPresentationAPI: 0
@@ -111,7 +111,7 @@ PlayerSettings:
   VertexChannelCompressionMask:
     serializedVersion: 2
     m_Bits: 238
-  iPhoneSdkVersion: 989
+  iPhoneSdkVersion: 988
   iPhoneTargetOSVersion: 28
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0

@@ -6,7 +6,7 @@ public class DragAndDrop : MonoBehaviour {
 	private Vector3 screenPoint;
 	private Vector3 offset;
 	private float lastClick = 0;
-	private float doubleClickDelay = 0.3f;
+	private float doubleClickDelay = 0.75f;
 	private bool doubleClick = false;
 
     // Use this for initialization
