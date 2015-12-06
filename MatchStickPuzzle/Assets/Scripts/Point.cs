@@ -69,4 +69,8 @@ public class Point {
 
         return false;
     }
+
+	public string Print() {
+		return x + ", " + y + ", " + rotation;
+	}
 }

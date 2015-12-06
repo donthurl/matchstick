@@ -370,6 +370,23 @@ public class GameManager : MonoBehaviour {
 		completedLevels.Clear();
 	}
 
+	public void PrintSticks() {
+		if (!Debug.isDebugBuild) {
+			return;
+		}
+
+		GameObject[] sticks = GameObject.FindGameObjectsWithTag("Stick");
+		IList<Point> stickPoints = new List<Point>();
+		string output = "";
+		foreach (GameObject stick in sticks) {
+			if (output.Length != 0) {
+				output += ",\n";
+			} 
+			output += "\"" + stick.GetComponent<MatchStick>().Print() + "\"";
+		}
+		Debug.Log("Current board layout: \n" + output);
+	}
+
 	[Serializable]
 	class PlayerData {
 		public IList<int>  beatenLevels;

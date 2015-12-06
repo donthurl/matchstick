@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MatchStick : MonoBehaviour {
 
@@ -27,12 +28,17 @@ public class MatchStick : MonoBehaviour {
         return this.point;
     }
 
+	public string Print() {
+		return this.point.Print();
+	}
+
     /* Calls setPosition and plays audio sound */
     public void dropAt(float x, float y, float z) {
         setPosition(x, y, z);
         source.PlayOneShot(placementSound, 1);
 		if (Debug.isDebugBuild)  {
 			Debug.Log ("(" +  x +  ", " + y +  ", " + z + ")");
+			GameManager.instance.PrintSticks();
 		}
     }
 
