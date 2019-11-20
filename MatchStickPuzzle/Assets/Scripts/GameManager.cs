@@ -7,6 +7,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour {
 #if !UNITY_WEBPLAYER
         Load();
 #endif
-        instance.InitGame ();
+        //instance.InitGame ();
 	}
 
     // Update is called once per frame
@@ -111,7 +112,16 @@ public class GameManager : MonoBehaviour {
     }
 
     // Auto gets called when next level is loaded.
-    void OnLevelWasLoaded(int index) {
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // Called when game is terminated
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;   
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         InitGame();
     }
 
