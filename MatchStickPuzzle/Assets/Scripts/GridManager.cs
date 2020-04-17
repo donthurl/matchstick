@@ -49,9 +49,11 @@ public class GridManager : MonoBehaviour {
 					lineObj = new GameObject ();
                 
 					lineRenderer = lineObj.AddComponent<LineRenderer> ();
-					lineRenderer.SetColors (c1, c2);
-					//lineRenderer.material = whiteDiffuseMat;
-					lineRenderer.SetWidth (0.1F, 0.1F);
+                    lineRenderer.startColor = c1;
+                    lineRenderer.endColor = c2;
+                    //lineRenderer.material = whiteDiffuseMat;
+                    lineRenderer.startWidth = 0.1F;
+                    lineRenderer.endWidth = 0.1F;
 					lineRenderer.SetPosition (0, startPoint);
 					lineRenderer.SetPosition (1, endPpoint);
                 
@@ -61,10 +63,12 @@ public class GridManager : MonoBehaviour {
 					lineObj = new GameObject ();
                 
 					lineRenderer = lineObj.AddComponent<LineRenderer> ();
-					lineRenderer.SetColors (c1, c2);
-					//lineRenderer.material = whiteDiffuseMat;
-					lineRenderer.SetWidth (0.1F, 0.1F);
-					lineRenderer.SetPosition (0, startPoint);
+                    lineRenderer.startColor = c1;
+                    lineRenderer.endColor = c2;
+                    //lineRenderer.material = whiteDiffuseMat;
+                    lineRenderer.startWidth = 0.1F;
+                    lineRenderer.endWidth = 0.1F;
+                    lineRenderer.SetPosition (0, startPoint);
 					lineRenderer.SetPosition (1, endPpoint);
 				}
 			}

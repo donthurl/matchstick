@@ -57,12 +57,12 @@ public class DragAndDrop : MonoBehaviour {
 			GameObject stash = GameObject.FindGameObjectWithTag ("Stash");
 			// Check to see if we dropped on the stash. If so, then...
 			if (stash.GetComponent<StickStash> ().OnStash ()) {
-				// The stick's OnDestroy will call a check.
-				// Do that instead of checking solution right here because
-				// the stick won't actually get destroyed/removed until next frame.
-				Destroy (gameObject);
+                // The stick's OnDestroy will call a check.
+                // Do that instead of checking solution right here because
+                // the stick won't actually get destroyed/removed until next frame.
+                matchStickScript.Stashed();
+                Destroy (gameObject);
 				stash.GetComponent<StickStash> ().AddToStash ();
-				matchStickScript.Stashed();
 				return;
 			}
 
